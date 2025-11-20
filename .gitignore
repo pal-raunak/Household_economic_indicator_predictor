@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+*.egg-info/
+dist/
+build/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+profile.log
+
+# Environment variables
+.env
+.env.local
+
+# Config files with sensitive data (API keys, credentials)
+app/config/server.yml
+
+# Output files
+outputs/
+*.png
+*.jpg
+*.jpeg
+*.tif
+*.tiff
+app/static/stored_maps/
+models/
+
+# Data files (if they contain sensitive data)
+*.xlsx
+*.csv
+# Uncomment the line above if you want to ignore Excel/CSV files
+
+# OS
+.DS_Store
+Thumbs.db
+
