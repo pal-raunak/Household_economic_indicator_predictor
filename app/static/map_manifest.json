@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Chansarpur",
+        "filename": "Chansarpur.tif",
+        "path": "stored_maps/Chansarpur.tif"
+    },
+    {
+        "name": "Gadgachhi",
+        "filename": "Gadgachhi.tif",
+        "path": "stored_maps/Gadgachhi.tif"
+    },
+    {
+        "name": "Kismat Bishrigeria",
+        "filename": "Kismat Bishrigeria.tif",
+        "path": "stored_maps/Kismat Bishrigeria.tif"
+    },
+    {
+        "name": "Paikan Karanji",
+        "filename": "Paikan Karanji.tif",
+        "path": "stored_maps/Paikan Karanji.tif"
+    },
+    {
+        "name": "Sanjharia",
+        "filename": "Sanjharia.tif",
+        "path": "stored_maps/Sanjharia.tif"
+    }
+]

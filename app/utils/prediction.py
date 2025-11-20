@@ -4,17 +4,9 @@ import numpy as np
 import torch
 import torch.nn as nn
 import joblib
+from utils.assets import get_model_file
 from utils.constants import OUTPUTS_DIR
 from utils.image_utils import extract_lbp_features, RESIZE_DIMS
-
-# Model paths
-MODEL_DIR = os.path.join("models")
-LBP_MODEL_PATH = os.path.join(MODEL_DIR, "lbp_model.pkl")
-LABEL_ENCODER_PATH = os.path.join(MODEL_DIR, "label_encoder.pkl")
-ROOFTOP_ENCODER_PATH = os.path.join(MODEL_DIR, "rooftop_encoder.pkl")
-AREA_SCALER_PATH = os.path.join(MODEL_DIR, "area_scaler.pkl")
-TARGET_ENCODERS_PATH = os.path.join(MODEL_DIR, "target_encoders.pkl")
-AREA_MODEL_PATH = os.path.join(MODEL_DIR, "area_predictor_model.pt")
 
 class MultiHeadClassifier(nn.Module):
     def __init__(self, input_dim, output_dims):
@@ -65,11 +57,11 @@ def predict_from_mask(mask_binary):
         pixel_area = np.sum(mask_binary > 0)
         
         # Load models and encoders
-        lbp_model = joblib.load(LBP_MODEL_PATH)
-        lbp_encoder = joblib.load(LABEL_ENCODER_PATH)
-        rooftop_encoder = joblib.load(ROOFTOP_ENCODER_PATH)
-        scaler = joblib.load(AREA_SCALER_PATH)
-        target_encoders = joblib.load(TARGET_ENCODERS_PATH)
+        lbp_model = joblib.load(get_model_file("lbp_model.pkl"))
+        lbp_encoder = joblib.load(get_model_file("label_encoder.pkl"))
+        rooftop_encoder = joblib.load(get_model_file("rooftop_encoder.pkl"))
+        scaler = joblib.load(get_model_file("area_scaler.pkl"))
+        target_encoders = joblib.load(get_model_file("target_encoders.pkl"))
 
         # Extract LBP features and predict rooftop type with confidence
         lbp_features = extract_lbp_features(patch)
@@ -82,7 +74,9 @@ def predict_from_mask(mask_binary):
         # Load and prepare area predictor model
         output_dims = [len(enc.classes_) for enc in target_encoders.values()]
         model = MultiHeadClassifier(input_dim=2, output_dims=output_dims)
-        state_dict = torch.load(AREA_MODEL_PATH, map_location='cpu')
+        state_dict = torch.load(
+            get_model_file("area_predictor_model.pt"), map_location='cpu'
+        )
         model.load_state_dict(state_dict)
         model.eval()
 

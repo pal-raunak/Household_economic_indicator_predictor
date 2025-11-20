@@ -21,3 +21,4 @@ matplotlib>=3.4.0
 langchain-openai
 tiktoken
 PyYAML
+huggingface_hub>=0.23.0

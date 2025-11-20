@@ -3,6 +3,8 @@ import cv2
 import numpy as np
 import rasterio
 from rasterio.warp import transform
+
+from utils import io as custom_io
 from utils.constants import OUTPUTS_DIR
 
 def crop_and_locate(selected_id, df, tiff_file):
@@ -21,7 +23,7 @@ def crop_and_locate(selected_id, df, tiff_file):
             with open(tiff_path, "wb") as f:
                 f.write(tiff_file.read())
         else:  # Pre-stored TIFF
-            tiff_path = os.path.join("app/static/stored_maps", tiff_file)
+            tiff_path = custom_io.get_local_map_path(tiff_file)
             
         if not os.path.exists(tiff_path):
             raise FileNotFoundError(f"TIFF file not found at {tiff_path}")

@@ -3,12 +3,14 @@ import torch
 import numpy as np
 import cv2
 from segment_anything import sam_model_registry, SamPredictor
-from utils.constants import OUTPUTS_DIR, MODEL_PATH
+from utils.assets import get_sam_checkpoint_path
+from utils.constants import OUTPUTS_DIR
 
 def load_sam_model():
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model_type = "vit_h"
-    sam = sam_model_registry[model_type](checkpoint=MODEL_PATH).to(device)
+    checkpoint_path = get_sam_checkpoint_path()
+    sam = sam_model_registry[model_type](checkpoint=checkpoint_path).to(device)
     return SamPredictor(sam)
 
 def generate_masks(cropped_img_path, pixel):
