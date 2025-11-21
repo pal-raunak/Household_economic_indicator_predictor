@@ -13,11 +13,26 @@ import matplotlib.pyplot as plt
 
 
 def get_actual_data(tiff_filename, id_value):
-
+    # Get the base name without extension
+    base_name = os.path.splitext(os.path.basename(tiff_filename))[0]
+    
+    # Try multiple possible paths (for local dev and HF Spaces)
+    possible_paths = [
+        os.path.join('static', 'data', f'{base_name}.xlsx'),  # When running from app/ directory
+        os.path.join('app', 'static', 'data', f'{base_name}.xlsx'),  # When running from root
+        os.path.join(os.path.dirname(__file__), 'static', 'data', f'{base_name}.xlsx'),  # Absolute path
+    ]
+    
     try:
-        # Get the base name without extension
-        base_name = os.path.splitext(os.path.basename(tiff_filename))[0]
-        excel_path = os.path.join('app', 'static', 'data', f'{base_name}.xlsx')
+        excel_path = None
+        for path in possible_paths:
+            if os.path.exists(path):
+                excel_path = path
+                break
+        
+        if excel_path is None:
+            # Use the first path as default and let it fail with a clear error
+            excel_path = possible_paths[0]
 
         try:
 
@@ -43,7 +58,8 @@ def get_actual_data(tiff_filename, id_value):
                 "Please ensure the Excel file is not open in another program and try again.")
             return None
         except FileNotFoundError:
-            st.error(f"Excel file not found at: {excel_path}")
+            tried_paths = '\n'.join([f"  - {p}" for p in possible_paths])
+            st.error(f"Excel file not found. Tried paths:\n{tried_paths}\nCurrent working directory: {os.getcwd()}")
             return None
 
     except Exception as e:
