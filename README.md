@@ -1,4 +1,4 @@
----
+<!-- ---
 title: Household Economic Indicator Predictor
 emoji: 🏠
 colorFrom: blue
@@ -7,8 +7,7 @@ sdk: streamlit
 sdk_version: 1.51.0
 app_file: app.py
 pinned: false
-license: mit
----
+--- -->
 
 # Household Level Economic Indicator Predictor
 
