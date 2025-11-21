@@ -42,6 +42,8 @@ models/
 # Data files (if they contain sensitive data)
 *.xlsx
 *.csv
+# Exception: Allow Excel files in app/static/data/ for ground truth data
+!app/static/data/*.xlsx
 # Uncomment the line above if you want to ignore Excel/CSV files
 
 # OS
